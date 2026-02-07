@@ -114,3 +114,8 @@ text-align: "center";
 color: "#fff";
 cursor: pointer;
 `
+
+export const ErrorText = styled.p`
+color: #be1919;
+margin-bottom: 5px;
+`

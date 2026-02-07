@@ -76,7 +76,7 @@ router.post('/new-user/', async (request, response) => {
 })
 
 // all products for user
-router.get("/user/products/", UserPrevent, async (req, res) => {
+router.get("/products-all/", UserPrevent, async (req, res) => {
   try {
     const products = await Product.find();
 
