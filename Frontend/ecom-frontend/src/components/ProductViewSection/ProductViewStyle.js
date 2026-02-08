@@ -3,10 +3,10 @@ import styled from 'styled-components'
 /* PAGE WRAPPER — LOCK SCROLL */
 export const PageWrapper = styled.div`
   display: flex;
-  height: 100vh;
+  height: 87vh;
   overflow: hidden;
   gap: 24px;
-
+  scrollbar-width: none;
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 0;

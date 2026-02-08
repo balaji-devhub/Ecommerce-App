@@ -1,12 +1,14 @@
-import { Card, Image, Title, Price } from './CardStyle'
+import { Card, Image, Title, Price, ProductLink } from './CardStyle'
 
-const ProductCard = ({ title, price }) => {
+const ProductCard = ({ title, price, img, productId }) => {
   return (
-    <Card>
-      <Image />
-      <Title>{title}</Title>
-      <Price>₹ {price}</Price>
-    </Card>
+    <ProductLink to={`/user/products/${productId}/`}>
+      <Card>
+        <Image src={img} />
+        <Title>{title}</Title>
+        <Price>₹ {price}</Price>
+      </Card>
+    </ProductLink>
   )
 }
 

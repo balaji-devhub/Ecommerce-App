@@ -97,4 +97,26 @@ router.get("/products-all/", UserPrevent, async (req, res) => {
 });
 
 
+// get Specific Product Details 
+
+router.get("/products/:id/", UserPrevent, async (req, res) => {
+  try {
+    const { id } = req.params
+    const products = await Product.findById({ _id: id });
+
+    return res.status(200).json({
+      success: true,
+      products
+    });
+
+  } catch (error) {
+    console.error("Fetch Products Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch products"
+    });
+  }
+});
+
 export default router

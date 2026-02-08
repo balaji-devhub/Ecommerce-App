@@ -9,12 +9,31 @@ import { BsHandbag } from 'react-icons/bs'
 import { RiMenu3Fill } from 'react-icons/ri'
 import { PiUserCircleThin } from 'react-icons/pi'
 import { useEffect } from 'react'
+import Cookies from 'js-cookie'
+
 const ProductView = () => {
-  const url = import.meta.env.VITE_BASE_URL
+  const url = import.meta.env.VITE_API_URL
   const [openFilter, setOpenFilter] = useState(false)
   const [productData, setProductData] = useState([])
+  const [loading, setLoading] = useState(false)
 
-  const fetchProducts = async () => {}
+  const fetchProducts = async () => {
+    try {
+      setLoading(true)
+      const token = Cookies.get('jwt_token')
+      const response = await axios.get(`${url}/user/products-all/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setProductData(response.data.products)
+      // console.log(response.data.products)
+    } catch (error) {
+      console.log(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
     fetchProducts()
@@ -38,8 +57,16 @@ const ProductView = () => {
 
         <ProductsSection>
           <Grid>
-            {Array.from({ length: 1200 }).map((_, i) => (
-              <ProductCard key={i} title={`Product ${i + 1}`} price={999 + i * 100} />
+            {productData.map(each => (
+              <ProductCard
+                key={each._id}
+                title={each.productname}
+                price={each.price}
+                rating={each.rating}
+                img={each.product_imageurl}
+                description={each.description}
+                productId={each._id}
+              />
             ))}
           </Grid>
         </ProductsSection>

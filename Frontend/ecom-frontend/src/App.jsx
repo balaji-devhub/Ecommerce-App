@@ -5,6 +5,7 @@ import ProductView from './components/ProductViewSection/ProductView'
 import CartPage from './components/CartComponent/Cart'
 import Login from './components/LoginPage/loginpage'
 import Register from './components/Register/Register'
+import ProductDetail from './components/ProductDetailView/ProductDetail'
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/user/cart/" element={<CartPage />} />
         <Route path="/user/login/" element={<Login />} />
         <Route path="/user/register/" element={<Register />} />
+        <Route path="/user/products/:id" element={<ProductDetail />} />
       </Routes>
     </>
   )
