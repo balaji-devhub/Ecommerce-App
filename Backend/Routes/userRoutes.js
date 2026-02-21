@@ -8,7 +8,7 @@ import Product from '../Model/ProductModel.js'
 dotenv.config()
 const router = express.Router()
 
-// login User
+// login User 
 router.post('/login/', async (request, response) => {
   try {
     const { email, password } = request.body
@@ -97,7 +97,7 @@ router.get("/products-all/", UserPrevent, async (req, res) => {
 });
 
 
-// get Specific Product Details 
+// get Specific Product Details for detail product page 
 
 router.get("/products/:id/", UserPrevent, async (req, res) => {
   try {
