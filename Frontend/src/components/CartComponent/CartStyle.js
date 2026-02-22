@@ -3,31 +3,26 @@ import styled from "styled-components";
 /* PAGE */
 
 export const Page = styled.div`
-  background: #f5f6f8;
+  background: #2f3e5c;
   min-height: 100vh;
-  padding: 20px;
+
+  padding: 30px 20px;
 
   display: flex;
   flex-direction: column;
-
-  @media (max-width: 768px) {
-    padding: 10px;
-    padding-bottom: 120px;
-  }
+  align-items: center;
 `;
 
 /* CONTAINER */
 
 export const CartContainer = styled.div`
-  min-width: 1200px;
-  margin: auto;
+  max-width: 1200px;
   width: 100%;
+  margin-top: 20px;
 
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
-
-  flex: 1;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -39,8 +34,8 @@ export const CartContainer = styled.div`
 export const Title = styled.h2`
   grid-column: span 2;
   font-weight: bold;
-  margin-top: 7px;
-  padding-left: 10px;
+  margin-bottom: 10px;
+  color: black;
 
   @media (max-width: 900px) {
     grid-column: span 1;
