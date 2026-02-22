@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import Cookies from 'js-cookie'
+
 import {
   Page,
   CartContainer,
@@ -16,74 +19,152 @@ import {
   CheckoutButton,
   CartItemsWrapper
 } from './CartStyle'
+
 import { FiPlus, FiMinus, FiTrash2 } from 'react-icons/fi'
 
 const CartPage = () => {
-  const [cart, setCart] = useState([
-    { id: 1, name: 'Wireless Headphones', price: 1999, qty: 1 },
-    { id: 2, name: 'Smart Watch', price: 2999, qty: 2 },
-    { id: 3, name: 'Bluetooth Speaker', price: 1499, qty: 1 },
-    { id: 4, name: 'Power Bank', price: 999, qty: 1 },
-    { id: 5, name: 'USB Cable', price: 299, qty: 2 },
-    { id: 6, name: 'Laptop Stand', price: 1899, qty: 1 },
-    { id: 7, name: 'Keyboard', price: 2499, qty: 1 },
-    { id: 8, name: 'Mouse', price: 799, qty: 1 }
-  ])
+  const url = import.meta.env.VITE_API_URL
+
+  const [cart, setCart] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  /* FETCH CART */
+
+  const fetchCart = async () => {
+    try {
+      const token = Cookies.get('jwt_token')
+      if (!token) return
+
+      const { data } = await axios.get(`${url}/user/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      setCart(data.cart?.items || [])
+    } catch (error) {
+      console.log('Cart Fetch Error', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchCart()
+  }, [])
+
+  /* UPDATE QUANTITY */
+
+  const updateQuantity = async (productId, newQty) => {
+    try {
+      const token = Cookies.get('jwt_token')
+
+      await axios.put(
+        `${url}/user/cart/update/${productId}`,
+        { quantity: newQty },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      setCart(prev =>
+        prev.map(item => (item.productId._id === productId ? { ...item, quantity: newQty } : item))
+      )
+    } catch (error) {
+      console.log('Quantity Update Error', error)
+    }
+  }
+
+  /* INCREASE */
 
   const increaseQty = id => {
-    setCart(prev => prev.map(item => (item.id === id ? { ...item, qty: item.qty + 1 } : item)))
+    const item = cart.find(i => i.productId._id === id)
+    if (!item) return
+    updateQuantity(id, item.quantity + 1)
   }
+
+  /* DECREASE */
 
   const decreaseQty = id => {
-    setCart(prev =>
-      prev.map(item => (item.id === id && item.qty > 1 ? { ...item, qty: item.qty - 1 } : item))
-    )
+    const item = cart.find(i => i.productId._id === id)
+    if (!item || item.quantity === 1) return
+    updateQuantity(id, item.quantity - 1)
   }
 
-  const deleteItem = id => {
-    setCart(prev => prev.filter(item => item.id !== id))
+  /* DELETE ITEM */
+
+  const deleteItem = async productId => {
+    try {
+      const token = Cookies.get('jwt_token')
+
+      await axios.delete(`${url}/user/cart/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      setCart(prev => prev.filter(item => item.productId._id !== productId))
+    } catch (error) {
+      console.log('Delete Error', error)
+    }
   }
 
-  const totalAmount = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
+  /* TOTAL */
+
+  const totalAmount = Math.round(
+    cart.reduce((sum, item) => sum + item.productId.price * item.quantity, 0)
+  )
+
+  if (loading) {
+    return <Page>Loading Cart...</Page>
+  }
 
   return (
     <Page>
       <CartContainer>
         <Title>Your Cart</Title>
 
+        {cart.length === 0 && <p>Your cart is empty</p>}
+
         <CartItemsWrapper>
           {cart.map(item => (
-            <CartItem key={item.id}>
-              <Image />
+            <CartItem key={item.productId._id}>
+              <Image src={item.productId.image_link} />
 
               <Info>
-                <ProductName>{item.name}</ProductName>
-                <Price>₹ {item.price}</Price>
+                <ProductName>{item.productId.name}</ProductName>
+
+                <Price>₹ {item.productId.price}</Price>
               </Info>
 
               <QuantityBox>
-                <QtyButton onClick={() => decreaseQty(item.id)}>
+                <QtyButton onClick={() => decreaseQty(item.productId._id)}>
                   <FiMinus />
                 </QtyButton>
 
-                <QtyValue>{item.qty}</QtyValue>
+                <QtyValue>{item.quantity}</QtyValue>
 
-                <QtyButton onClick={() => increaseQty(item.id)}>
+                <QtyButton onClick={() => increaseQty(item.productId._id)}>
                   <FiPlus />
                 </QtyButton>
               </QuantityBox>
 
-              <QtyButton onClick={() => deleteItem(item.id)} title="Remove item">
+              <QtyButton onClick={() => deleteItem(item.productId._id)} title="Remove item">
                 <FiTrash2 />
               </QtyButton>
             </CartItem>
           ))}
         </CartItemsWrapper>
 
-        <Summary>
-          <Total>Total: ₹ {totalAmount}</Total>
-          <CheckoutButton>Checkout</CheckoutButton>
-        </Summary>
+        {cart.length > 0 && (
+          <Summary>
+            <Total>Total: ₹ {totalAmount}</Total>
+
+            <CheckoutButton>Checkout</CheckoutButton>
+          </Summary>
+        )}
       </CartContainer>
     </Page>
   )

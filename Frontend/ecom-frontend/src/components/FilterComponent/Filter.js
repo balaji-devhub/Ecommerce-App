@@ -1,20 +1,22 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-/* 1. The Main Layout Wrapper */
+/* PAGE LAYOUT */
+
 export const PageLayout = styled.div`
   display: flex;
   gap: 30px;
   padding: 20px 5%;
-  background-color: #f8f9fa;
+  background: #f1f3f6;
   min-height: 100vh;
 
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 10px;
   }
-`;
+`
 
-/* 2. Overlay (Background dim when mobile sidebar is open) */
+/* OVERLAY */
+
 export const Overlay = styled.div`
   display: none;
 
@@ -22,102 +24,140 @@ export const Overlay = styled.div`
     display: ${({ open }) => (open ? 'block' : 'none')};
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 1000;
+    background: rgba(0,0,0,0.45);
     backdrop-filter: blur(2px);
+    z-index: 1000;
   }
-`;
+`
 
-/* 3. Mobile Top Filter Bar (Visible only on mobile) */
-export const MobileFilterBar = styled.div`
-  display: none; /* Hidden on desktop */
+/* MOBILE TOP BAR */
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+export const TopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-`;
+  background: #fff;
+  padding: 14px 20px;
 
-/* 4. Sidebar / Filter Box */
-export const FilterBox = styled.div`
-  width: 280px;
+  border-bottom: 1px solid #eee;
+
   position: sticky;
-  top: 20px; /* Distance from top when scrolling */
+  top: 0;
+  z-index: 999;
+`
+
+/* FILTER BOX */
+
+export const FilterBox = styled.div`
+  width: 290px;
+  position: sticky;
+  top: 20px;
   height: fit-content;
   max-height: calc(100vh - 40px);
+
   background: #fff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-  overflow-y: auto; /* Scrollable if many filters */
+  padding: 22px;
+  border-radius: 14px;
+
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+
+  overflow-y: auto;
+
+  /* smooth scrollbar */
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+  }
 
   @media (max-width: 768px) {
     position: fixed;
     top: 0;
     left: 0;
-    min-height: 100vh;
+
     width: 300px;
+    height: 100vh;
+
     border-radius: 0;
     z-index: 1001;
-    /* Transition fixed to ensure smooth slide-in */
-    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(-100%)')};
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    transform: ${({ open }) =>
+    open ? 'translateX(0)' : 'translateX(-100%)'};
+
+    transition: transform 0.35s ease;
   }
-`;
+`
+
+/* TITLE */
 
 export const FilterTitle = styled.h3`
-  margin-bottom: 20px;
-  font-size: 1.2rem;
-  color: #333;
+  font-size: 1.15rem;
+  margin-bottom: 18px;
+  color: #222;
+  font-weight: 600;
+  padding-bottom: 8px;
   border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-`;
+`
+
+/* FILTER ITEM */
 
 export const FilterItem = styled.label`
   display: flex;
   align-items: center;
   gap: 10px;
+
   margin-bottom: 12px;
   cursor: pointer;
+
   font-size: 0.95rem;
   color: #555;
-  transition: color 0.2s;
+
+  transition: all 0.2s ease;
 
   &:hover {
-    color: #ff9800;
+    color: #2874f0;
+    transform: translateX(2px);
   }
 
   input {
     cursor: pointer;
-    accent-color: #ff9800;
+    accent-color: #2874f0;
   }
-`;
+`
 
-/* 5. Utility Alignment for Mobile Bar Icons */
+/* MOBILE ICON ALIGN */
+
 export const ContainerAlignment = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 15px;
-`;
+`
 
-/* 6. Close Button for Mobile (Hidden on Desktop) */
+/* CLOSE BUTTON */
+
 export const CloseButton = styled.button`
   display: none;
-  
+
   @media (max-width: 768px) {
     display: block;
-    background: none;
+    background: #f5f5f5;
     border: none;
-    font-size: 24px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 18px;
     cursor: pointer;
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 15px;
+    top: 15px;
+
+    &:hover {
+      background: #eee;
+    }
   }
-`;
+`

@@ -1,70 +1,108 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Oval } from 'react-loader-spinner'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { Oval } from 'react-loader-spinner'
 
 import {
   PageWrapper,
+  TopBar,
+  IconGroup,
   Container,
   ImageSection,
   MainImage,
   InfoSection,
   Title,
+  RatingBadge,
+  PriceRow,
   Price,
-  Description,
+  OldPrice,
+  Discount,
   Meta,
-  Button
+  OfferBox,
+  Delivery,
+  Description,
+  ButtonRow,
+  CartButton,
+  BuyButton
 } from './ProductDetailStyle'
+
+import SidebarFilter from '../FilterComponent/SidebarFilter'
+import { FiFilter } from 'react-icons/fi'
+import { BsHandbag } from 'react-icons/bs'
+import { RiMenu3Fill } from 'react-icons/ri'
+import { PiUserCircleThin } from 'react-icons/pi'
 
 const ProductDetail = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
   const url = import.meta.env.VITE_API_URL
 
-  const [products, setProduct] = useState(null)
+  const [openFilter, setOpenFilter] = useState(false)
+  const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+
+  /* FETCH PRODUCT */
 
   useEffect(() => {
-    let isMounted = true
-
     const fetchProduct = async () => {
       try {
-        setError('')
-
         const token = Cookies.get('jwt_token')
-        if (!token) throw new Error('Unauthorized: Please login')
+
+        if (!token) {
+          navigate('/login')
+          return
+        }
 
         const { data } = await axios.get(`${url}/user/products/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
-        console.log(data)
-        if (!data?.products) {
-          throw new Error('Product not found')
-        }
 
-        if (isMounted) {
-          setProduct(data.products)
-        }
+        setProduct(data.products)
       } catch (err) {
-        if (isMounted) {
-          setError(err.message || 'Failed to fetch product')
-        }
+        console.log('Product Fetch Error:', err)
       } finally {
-        if (isMounted) {
-          setLoading(false)
-        }
+        setLoading(false)
       }
     }
 
-    if (id) fetchProduct()
+    fetchProduct()
+  }, [id, url, navigate])
 
-    return () => {
-      isMounted = false
+  /* ADD TO CART */
+
+  const ProductAddingtoCart = async productId => {
+    try {
+      const token = Cookies.get('jwt_token')
+
+      if (!token) {
+        navigate('/login')
+        return
+      }
+
+      const response = await axios.post(
+        `${url}/user/cart/add/`,
+        { id: productId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+
+      console.log(response.data)
+
+      if (response.data.status) {
+        alert('Product added to cart')
+      }
+    } catch (error) {
+      console.log('Cart Error:', error)
     }
-  }, [id, url])
+  }
+
+  /* LOADER */
 
   if (loading) {
     return (
@@ -76,49 +114,81 @@ const ProductDetail = () => {
           height: '80vh'
         }}
       >
-        <Oval height={60} width={60} color="#6C63FF" secondaryColor="#ddd" strokeWidth={4} />
+        <Oval height={60} width={60} color="#2874f0" />
       </PageWrapper>
     )
   }
 
-  if (error) {
-    return (
-      <PageWrapper style={{ textAlign: 'center', marginTop: '100px' }}>
-        <h2>{error}</h2>
-      </PageWrapper>
-    )
-  }
+  if (!product) return null
 
-  if (!products) return null
+  const { name, price, description, category, rating, image_link, _id } = product
 
-  const { productname, price, description, category, rating, product_imageurl } = products
+  const oldPrice = Math.round(price * 1.2)
+  const discount = Math.round(((oldPrice - price) / oldPrice) * 100)
 
   return (
     <PageWrapper>
+      {/* TOP BAR */}
+
+      <TopBar>
+        <PiUserCircleThin size={40} />
+
+        <IconGroup>
+          <FiFilter size={26} onClick={() => navigate('/products')} />
+          <BsHandbag size={26} onClick={() => navigate('/user/cart')} />
+          <RiMenu3Fill size={26} onClick={() => setOpenFilter(true)} />
+        </IconGroup>
+      </TopBar>
+
+      {/* FILTER SIDEBAR */}
+
+      {openFilter && <SidebarFilter openFilter={openFilter} setOpenFilter={setOpenFilter} />}
+
+      {/* PRODUCT */}
+
       <Container>
         <ImageSection>
-          <MainImage src={product_imageurl || '/fallback-image.png'} alt={productname} />
+          <MainImage src={image_link} alt={name} />
         </ImageSection>
 
         <InfoSection>
-          <Title>{productname}</Title>
+          <Title>{name}</Title>
 
-          <Price>{typeof price === 'number' ? `₹ ${price.toLocaleString()}` : price}</Price>
+          {rating && <RatingBadge>⭐ {rating}</RatingBadge>}
+
+          <PriceRow>
+            <Price>₹{price}</Price>
+            <OldPrice>₹{oldPrice}</OldPrice>
+            <Discount>{discount}% off</Discount>
+          </PriceRow>
 
           <Meta>
-            <p>
-              <strong>Category:</strong> {category}
-            </p>
-            {rating && (
-              <p>
-                <strong>Rating:</strong> ⭐ {rating}
-              </p>
-            )}
+            <strong>Category:</strong> {category}
           </Meta>
+
+          <OfferBox>
+            <strong>Available Offers</strong>
+            <ul>
+              <li>10% Instant discount on cards</li>
+              <li>No cost EMI available</li>
+              <li>Free delivery</li>
+            </ul>
+          </OfferBox>
+
+          <Delivery>
+            <strong>Delivery</strong>
+            <br />
+            <input placeholder="Enter Pincode" />
+            <button>Check</button>
+          </Delivery>
 
           <Description>{description}</Description>
 
-          <Button>Add to Cart</Button>
+          <ButtonRow>
+            <CartButton onClick={() => ProductAddingtoCart(_id)}>Add to Cart</CartButton>
+
+            <BuyButton>Buy Now</BuyButton>
+          </ButtonRow>
         </InfoSection>
       </Container>
     </PageWrapper>

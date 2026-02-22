@@ -1,178 +1,205 @@
 import styled from "styled-components";
 
+/* PAGE */
+
 export const Page = styled.div`
   background: #f5f6f8;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: flex-start; /* Aligns container to the left as per screenshot */
-  overflow: hidden;
-  padding: 0;
-  scrollbar-width: none;
+  min-height: 100vh;
+  padding: 20px;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-export const CartContainer = styled.div`
-  width: 100%;
-  max-width: 900px;
-  background: #fff;
-  /* border-radius only on right side for that specific "sliding drawer" look */
-  border-radius: 0 16px 16px 0; 
-  padding: 30px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  box-shadow: 10px 0 30px rgba(0,0,0,0.05);
 
   @media (max-width: 768px) {
-    max-width: 100%;
-    border-radius: 0;
+    padding: 10px;
+    padding-bottom: 120px;
   }
 `;
+
+/* CONTAINER */
+
+export const CartContainer = styled.div`
+  min-width: 1200px;
+  margin: auto;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+
+  flex: 1;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+/* TITLE */
 
 export const Title = styled.h2`
-  margin-bottom: 24px;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #000;
+  grid-column: span 2;
+  font-weight: bold;
+  margin-top: 7px;
+  padding-left: 10px;
+
+  @media (max-width: 900px) {
+    grid-column: span 1;
+  }
 `;
+
+/* ITEMS */
 
 export const CartItemsWrapper = styled.div`
-  flex: 1;
+  background: white;
+  border-radius: 10px;
   overflow-y: auto;
-  padding-right: 15px;
 
-  /* Matches the thin grey scrollbar in your image */
+  padding: 10px 0;
+
+  max-height: calc(100vh - 160px);
+
   &::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
   }
+
   &::-webkit-scrollbar-thumb {
-    background: #e0e0e0;
+    background: #ddd;
     border-radius: 10px;
   }
-`;
 
-export const CartItem = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 20px 0;
-  border-bottom: 1px solid #f0f0f0;
-
-  @media (max-width: 768px) {
-    gap: 15px;
+  @media (max-width: 900px) {
+    max-height: none;
   }
 `;
 
-export const Image = styled.div`
-  width: 85px;
-  height: 85px;
-  background-color: #eee;
-  background-image: ${props => props.src ? `url(${props.src})` : 'none'};
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  flex-shrink: 0;
+/* ITEM */
+
+export const CartItem = styled.div`
+  display: grid;
+  grid-template-columns: 110px 1fr auto auto;
+  gap: 20px;
+  align-items: center;
+
+  padding: 18px;
+  border-bottom: 1px solid #eee;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+  }
 `;
 
+/* IMAGE */
+
+export const Image = styled.img`
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+
+  @media (max-width: 768px) {
+    width: 70px;
+    height: 70px;
+  }
+`;
+
+/* INFO */
+
 export const Info = styled.div`
-  flex: 1;
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 `;
 
 export const ProductName = styled.h4`
-  margin-bottom: 4px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #333;
+  font-size: 15px;
+  line-height: 1.3;
 `;
 
 export const Price = styled.p`
-  font-weight: 700;
-  color: #ff9800; /* Matches the orange price in the image */
-  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111;
 `;
+
+/* QUANTITY */
 
 export const QuantityBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 15px;
-  flex-shrink: 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    margin-top: 6px;
+  }
 `;
 
 export const QtyButton = styled.button`
-  width: 30px;
-  height: 30px;
   border: none;
-  border-radius: 50%;
-  background: #f5f5f5;
+  background: white;
+  padding: 8px 12px;
   cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+
+  &:hover {
+    background: #f5f5f5;
+  }
+`;
+
+export const QtyValue = styled.div`
+  padding: 6px 14px;
+  min-width: 30px;
+  text-align: center;
+`;
+
+/* SUMMARY */
+
+export const Summary = styled.div`
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+
+  height: fit-content;
+  position: sticky;
+  top: 90px;
+
+  @media (max-width: 900px) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.08);
+
+    padding: 18px;
+  }
+`;
+
+/* TOTAL */
+
+export const Total = styled.h3`
+  margin-bottom: 15px;
+`;
+
+/* CHECKOUT */
+
+export const CheckoutButton = styled.button`
+  width: 100%;
+  background: #fb641b;
+  color: white;
+  border: none;
+  padding: 14px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+
   transition: 0.2s;
 
   &:hover {
-    background: #e8e8e8;
-  }
-`;
-
-/* New Component for the Trash/Delete Button in your image */
-export const DeleteButton = styled.button`
-  background: #f5f5f5;
-  border: none;
-  width: 35px;
-  height: 35px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: all 0.2s;
-
-  &:hover {
-    background: #fee;
-    color: #ff4d4f;
-  }
-`;
-
-export const QtyValue = styled.span`
-  font-weight: 800;
-  font-size: 1rem;
-`;
-
-export const Summary = styled.div`
-  margin-top: auto;
-  border-top: 1px solid #eee;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const Total = styled.h3`
-  color: #333;
-  font-size: 1.4rem;
-  font-weight: 500;
-`;
-
-export const CheckoutButton = styled.button`
-  padding: 16px 45px;
-  border: none;
-  background: #ff9800;
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 700;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
-
-  &:hover {
-    background: #f57c00;
-    transform: translateY(-1px);
+    background: #e85d04;
   }
 `;
