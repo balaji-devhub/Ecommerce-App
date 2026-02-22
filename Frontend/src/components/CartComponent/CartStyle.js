@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-/* PAGE */
+
 
 export const Page = styled.div`
   background: #2f3e5c;
@@ -13,7 +13,7 @@ export const Page = styled.div`
   align-items: center;
 `;
 
-/* CONTAINER */
+
 
 export const CartContainer = styled.div`
   max-width: 1200px;
@@ -29,7 +29,7 @@ export const CartContainer = styled.div`
   }
 `;
 
-/* TITLE */
+
 
 export const Title = styled.h2`
   grid-column: span 2;
@@ -42,7 +42,6 @@ export const Title = styled.h2`
   }
 `;
 
-/* ITEMS */
 
 export const CartItemsWrapper = styled.div`
   background: white;
@@ -67,7 +66,6 @@ export const CartItemsWrapper = styled.div`
   }
 `;
 
-/* ITEM */
 
 export const CartItem = styled.div`
   display: grid;
@@ -84,7 +82,7 @@ export const CartItem = styled.div`
   }
 `;
 
-/* IMAGE */
+
 
 export const Image = styled.img`
   width: 90px;
@@ -97,7 +95,6 @@ export const Image = styled.img`
   }
 `;
 
-/* INFO */
 
 export const Info = styled.div`
   display: flex;
@@ -115,7 +112,7 @@ export const Price = styled.p`
   color: #111;
 `;
 
-/* QUANTITY */
+
 
 export const QuantityBox = styled.div`
   display: flex;
@@ -150,7 +147,7 @@ export const QtyValue = styled.div`
   text-align: center;
 `;
 
-/* SUMMARY */
+
 
 export const Summary = styled.div`
   background: white;
@@ -174,13 +171,13 @@ export const Summary = styled.div`
   }
 `;
 
-/* TOTAL */
+
 
 export const Total = styled.h3`
   margin-bottom: 15px;
 `;
 
-/* CHECKOUT */
+
 
 export const CheckoutButton = styled.button`
   width: 100%;
