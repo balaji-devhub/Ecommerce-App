@@ -7,7 +7,7 @@ import Login from './components/LoginPage/loginpage'
 import Register from './components/Register/Register'
 import ProductDetail from './components/ProductDetailView/ProductDetail'
 import ProtectRoute from './components/ProtectContainer/ProtectFiles'
-import AdminLanding from './components/AdminDashboard/adminLanding'
+import AdminLanding from './components/AdminLanding/adminLanding'
 
 const App = () => {
   return (
