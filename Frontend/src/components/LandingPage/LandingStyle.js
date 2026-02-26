@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 
 /* Animations */
+
 const fadeUp = keyframes`
   from {
     opacity: 0;
@@ -23,21 +24,31 @@ const fadeDown = keyframes`
   }
 `;
 
+/* MAIN CONTAINER */
+
 export const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background: url("https://res.cloudinary.com/dlucwqoss/image/upload/v1769855665/port-elizabeth-south-africa-29-january-2024_n2wxi1.jpg")
     center/cover no-repeat;
   position: relative;
   overflow-x: hidden;
-  scrollbar-width: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
+
+/* DARK OVERLAY */
 
 export const Overlay = styled.div`
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
 `;
+
+/* NAVBAR */
 
 export const Navbar = styled.nav`
   position: relative;
@@ -53,6 +64,8 @@ export const Navbar = styled.nav`
   }
 `;
 
+/* MOBILE MENU ICON */
+
 export const MobileMenuIcon = styled.div`
   display: none;
   cursor: pointer;
@@ -61,6 +74,8 @@ export const MobileMenuIcon = styled.div`
     display: block;
   }
 `;
+
+/* LOGO */
 
 export const Logo = styled.h1`
   color: #fff;
@@ -95,11 +110,12 @@ export const Logo = styled.h1`
   }
 `;
 
+/* NAV LINKS */
+
 export const NavLinks = styled.div`
   display: flex;
   align-items: center;
   gap: 28px;
-   text-decoration: none;
 
   a {
     color: #fff;
@@ -115,7 +131,6 @@ export const NavLinks = styled.div`
     }
   }
 
-  /* Mobile menu */
   @media (max-width: 768px) {
     position: absolute;
     top: 60px;
@@ -128,30 +143,41 @@ export const NavLinks = styled.div`
   }
 `;
 
+/* HERO SECTION */
+
 export const HeroSection = styled.div`
   position: relative;
   z-index: 2;
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   padding: 0 60px;
 
   @media (max-width: 768px) {
-    padding: 0 30px;
+    padding: 0 20px;
     justify-content: center;
     text-align: center;
   }
 `;
 
+/* CONTENT */
+
 export const Content = styled.div`
   max-width: 600px;
   color: #fff;
   animation: ${fadeUp} 1s ease-out;
+
+  @media (max-width: 768px) {
+    margin: auto;
+  }
 `;
+
+/* TITLE */
 
 export const Title = styled.h1`
   font-size: 56px;
   margin-bottom: 20px;
+
   animation: ${fadeUp} 1s ease-out;
   animation-delay: 0.2s;
   animation-fill-mode: both;
@@ -165,11 +191,14 @@ export const Title = styled.h1`
   }
 `;
 
+/* SUBTITLE */
+
 export const Subtitle = styled.p`
   font-size: 18px;
   line-height: 1.6;
   margin-bottom: 30px;
   color: #ddd;
+
   animation: ${fadeUp} 1s ease-out;
   animation-delay: 0.4s;
   animation-fill-mode: both;
@@ -178,6 +207,8 @@ export const Subtitle = styled.p`
     font-size: 16px;
   }
 `;
+
+/* BUTTON GROUP */
 
 export const ButtonGroup = styled.div`
   display: flex;
@@ -193,13 +224,14 @@ export const ButtonGroup = styled.div`
   }
 `;
 
+/* PRIMARY BUTTON */
+
 export const PrimaryButton = styled.button`
   padding: 14px 30px;
   border: none;
   background: #ff9800;
   color: #000;
   font-size: 16px;
-   text-decoration: none;
   cursor: pointer;
   border-radius: 30px;
   transition: all 0.3s ease;
@@ -215,16 +247,16 @@ export const PrimaryButton = styled.button`
   }
 `;
 
+/* SECONDARY BUTTON */
+
 export const SecondaryButton = styled.button`
   padding: 14px 30px;
   border: 2px solid #fff;
   background: transparent;
   color: #fff;
   font-size: 16px;
-   text-decoration: none;
   cursor: pointer;
   border-radius: 30px;
-  
   transition: all 0.3s ease;
 
   &:hover {

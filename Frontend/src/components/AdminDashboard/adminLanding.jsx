@@ -10,9 +10,11 @@ import {
   ButtonGroup,
   PrimaryButton,
   SecondaryButton,
+  Nav,
   StatsSection,
   StatCard
-} from './adminStyle'
+} from './adminLandingStyle'
+import { Link } from 'react-router-dom'
 
 const AdminLanding = () => {
   return (
@@ -21,10 +23,10 @@ const AdminLanding = () => {
         <Logo>ShopX Seller</Logo>
 
         <NavLinks>
-          <a href="#">Dashboard</a>
-          <a href="#">Products</a>
-          <a href="#">Orders</a>
-          <a href="#">Analytics</a>
+          <Nav to="/admin/dashboard/">Dashboard</Nav>
+          <Nav to="#">Products</Nav>
+          <Nav to="#">Orders</Nav>
+          <Nav to="/user/login/">Login</Nav>
         </NavLinks>
       </Navbar>
 

@@ -7,8 +7,8 @@ import Login from './components/LoginPage/loginpage'
 import Register from './components/Register/Register'
 import ProductDetail from './components/ProductDetailView/ProductDetail'
 import ProtectRoute from './components/ProtectContainer/ProtectFiles'
-import AdminLanding from './components/AdminDashboard/admindash'
-import AdminProducts from './components/AdminProductPage/AdminProduct'
+import AdminLanding from './components/AdminDashboard/adminLanding'
+
 const App = () => {
   return (
     <>
@@ -16,14 +16,7 @@ const App = () => {
         <Route path="/admin/dashboard/" element={<AdminLanding />} />
         <Route path="/user/login/" element={<Login />} />
         <Route path="/user/register/" element={<Register />} />
-        <Route
-          path="/admin/products/"
-          element={
-            <>
-              <AdminProducts />
-            </>
-          }
-        />
+
         <Route
           path="/"
           element={
@@ -63,3 +56,12 @@ const App = () => {
 }
 
 export default App
+
+// <Route
+//         path="/admin/products/"
+//         element={
+//           <>
+//             <AdminProducts />
+//           </>
+//         }
+//       />

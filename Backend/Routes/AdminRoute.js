@@ -34,7 +34,7 @@ router.post('/login/', async (req, res) => {
       role: existingAdmin.role,
       adminId: existingAdmin._id
     }
-    const jwt_token = await jwt.sign(payload, process.env.JWT_TOKEN)
+    const jwt_token = jwt.sign(payload, process.env.JWT_TOKEN)
 
     res.status(200).json({
       message: 'Admin login successful',

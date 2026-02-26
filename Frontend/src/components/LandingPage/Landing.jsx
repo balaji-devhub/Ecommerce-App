@@ -49,6 +49,14 @@ const LandingPage = () => {
               Cart
             </Link>
 
+            <Link
+              to="/admin/dashboard/"
+              onClick={() => setIsMenuOpen(false)}
+              style={{ color: '#ebb513' }}
+            >
+              Admin
+            </Link>
+
             {!isLoggedIn ? (
               <Link
                 to="/user/login/"

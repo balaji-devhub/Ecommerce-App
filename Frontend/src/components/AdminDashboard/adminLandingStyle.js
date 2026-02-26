@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 /* Breakpoints */
@@ -205,4 +206,9 @@ export const StatCard = styled.div`
   @media (max-width: ${mobile}) {
     width: 90%;
   }
+`
+
+export const Nav = styled(Link)`
+cursor: pointer;
+text-decoration: none;
 `
