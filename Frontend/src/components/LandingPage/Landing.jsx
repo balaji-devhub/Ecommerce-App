@@ -18,10 +18,13 @@ import { LuLogOut } from 'react-icons/lu'
 import { RiLoginCircleFill } from 'react-icons/ri'
 import { HiMenuAlt3, HiX } from 'react-icons/hi'
 import { useState } from 'react'
+import Cookies from 'js-cookie'
 
 const LandingPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const token = Cookies.get('jwt_token')
 
   return (
     <Container>
@@ -52,9 +55,10 @@ const LandingPage = () => {
                 onClick={() => {
                   setIsLoggedIn(true)
                   setIsMenuOpen(false)
+                  Cookies.remove('jwt_token')
                 }}
               >
-                Login <RiLoginCircleFill size={18} />
+                {token ? 'Logout' : 'Login'} <RiLoginCircleFill size={18} />
               </Link>
             ) : (
               <Link
@@ -64,7 +68,7 @@ const LandingPage = () => {
                   setIsMenuOpen(false)
                 }}
               >
-                Logout <LuLogOut size={18} />
+                <LuLogOut size={18} />
               </Link>
             )}
           </NavLinks>
