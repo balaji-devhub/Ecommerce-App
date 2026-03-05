@@ -1,13 +1,13 @@
 import React from 'react'
-import LandingPage from './components/LandingPage/Landing'
+import LandingPage from './components/UserComponent/LandingPage/Landing'
 import { Route, Routes } from 'react-router-dom'
-import ProductView from './components/ProductViewSection/ProductView'
-import CartPage from './components/CartComponent/Cart'
-import Login from './components/LoginPage/loginpage'
-import Register from './components/Register/Register'
-import ProductDetail from './components/ProductDetailView/ProductDetail'
-import ProtectRoute from './components/ProtectContainer/ProtectFiles'
-import AdminLanding from './components/AdminLanding/adminLanding'
+import ProductView from './components/UserComponent/ProductViewSection/ProductView'
+import CartPage from './components/UserComponent/CartComponent/Cart'
+import Login from './components/UserComponent/LoginPage/loginpage'
+import Register from './components/UserComponent/Register/Register'
+import ProductDetail from './components/UserComponent/ProductDetailView/ProductDetail'
+import ProtectRoute from './components/UserComponent/ProtectContainer/ProtectFiles'
+import AdminLanding from './components/AdminComponent/AdminLanding/adminLanding'
 
 const App = () => {
   return (
@@ -56,12 +56,3 @@ const App = () => {
 }
 
 export default App
-
-// <Route
-//         path="/admin/products/"
-//         element={
-//           <>
-//             <AdminProducts />
-//           </>
-//         }
-//       />
