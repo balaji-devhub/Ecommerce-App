@@ -8,11 +8,17 @@ import Register from './components/UserComponent/Register/Register'
 import ProductDetail from './components/UserComponent/ProductDetailView/ProductDetail'
 import ProtectRoute from './components/UserComponent/ProtectContainer/ProtectFiles'
 import AdminLanding from './components/AdminComponent/AdminLanding/adminLanding'
+import AdminRegistration from './components/AdminComponent/AdminAuthentication/AdminRegister'
+import AdminProductList from './components/AdminComponent/AdminProductPage/AdminProduct'
+import AdminProductDetail from './components/AdminComponent/ProductDetailUpdate/ProductDetail'
 
 const App = () => {
   return (
     <>
       <Routes>
+        <Route path="/admin/product/detail/:id" element={<AdminProductDetail />} />
+        <Route path="/admin/products/" element={<AdminProductList />} />
+        <Route path="/admin/register/" element={<AdminRegistration />} />
         <Route path="/admin/dashboard/" element={<AdminLanding />} />
         <Route path="/user/login/" element={<Login />} />
         <Route path="/user/register/" element={<Register />} />

@@ -86,7 +86,7 @@ router.post('/new/', async (req, res) => {
 })
 
 // add new Product
-router.post('/new/product', LoggerPrevent, async (request, response) => {
+router.post('/new/product/', LoggerPrevent, async (request, response) => {
   try {
     const adminId = request.user.adminId
 
@@ -130,6 +130,27 @@ router.get('/product/all', LoggerPrevent, async (request, response) => {
     })
   }
 })
+
+// get Specific Products Details 
+router.get("/products/:id/", LoggerPrevent, async (req, res) => {
+  try {
+    const { id } = req.params
+    const products = await Product.findById({ _id: id });
+
+    return res.status(200).json({
+      success: true,
+      products
+    });
+
+  } catch (error) {
+    console.error("Fetch Products Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch products"
+    });
+  }
+});
 
 // delete Product
 router.delete('/product-del/:id', LoggerPrevent, async (request, response) => {

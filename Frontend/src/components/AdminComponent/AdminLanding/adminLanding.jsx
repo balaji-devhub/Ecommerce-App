@@ -14,22 +14,12 @@ import {
   StatsSection,
   StatCard
 } from './adminLandingStyle'
-import { Link } from 'react-router-dom'
+import Header from '../AdminHeader/AdminHeaderComponent'
 
 const AdminLanding = () => {
   return (
     <Page>
-      <Navbar>
-        <Logo>ShopX Seller</Logo>
-
-        <NavLinks>
-          <Nav to="/admin/dashboard/">Dashboard</Nav>
-          <Nav to="#">Products</Nav>
-          <Nav to="#">Orders</Nav>
-          <Nav to="/user/login/">Login</Nav>
-        </NavLinks>
-      </Navbar>
-
+      <Header />
       <Hero>
         <HeroContent>
           <Title>Grow Your Business with ShopX</Title>
@@ -47,3 +37,15 @@ const AdminLanding = () => {
 }
 
 export default AdminLanding
+
+{
+  /* <Navbar>
+        <Logo>ShopX Seller</Logo>
+
+        <NavLinks>
+          <Nav to="#">Products</Nav>
+          <Nav to="#">Orders Details</Nav>
+          <Nav to="/admin/login/">Login</Nav>
+        </NavLinks>
+      </Navbar> */
+}

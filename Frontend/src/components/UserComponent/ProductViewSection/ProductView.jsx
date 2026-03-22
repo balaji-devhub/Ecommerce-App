@@ -21,8 +21,6 @@ const ProductView = () => {
   const [productData, setProductData] = useState([])
   const [loading, setLoading] = useState(false)
 
-  /* FETCH PRODUCTS */
-
   const fetchProducts = async () => {
     try {
       setLoading(true)
@@ -61,10 +59,7 @@ const ProductView = () => {
       </TopBar>
 
       <PageWrapper>
-        {/* Sidebar Filter */}
         <SidebarFilter open={openFilter} setOpen={setOpenFilter} />
-
-        {/* Products */}
         <ProductsSection>
           <Grid>
             {loading ? (
